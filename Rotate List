@@ -1,0 +1,41 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+
+
+ // Read IntilliJ notes
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+       if(head == null || head.next == null || k == 0) return head;
+
+       ListNode temp = head;
+       int n = 1;                                   // ---------Core Logic-------
+       while(temp.next != null){                    // 1) calculate length of List
+        temp = temp.next;                           // 2) Optimize k -> k %= n;
+        n ++;                                       // 3) make list to circular LL
+       }                                            // 4) make new Tail
+       temp.next = head;                            // 5) change head of list
+                                                    // 6) break cycle
+       k = k % n;
+
+       int step = n - k;
+       ListNode newTail = head;
+       for(int i = 1; i< step; i++){
+        newTail = newTail.next;
+       }
+
+       ListNode newHead = newTail.next;
+
+       newTail.next = null;
+
+       return newHead;
+    }
+}
